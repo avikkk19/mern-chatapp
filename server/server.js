@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import authRoutes from "./routes/AuthRoutes.js";
 
 // Initialize dotenv to load environment variables
 dotenv.config();
@@ -21,9 +22,9 @@ mongoose
     console.log(e, "failed to connect to MongoDB");
   });
 
-  const server = app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
+const server = app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 // Middleware
 app.use(
   cors({
@@ -34,6 +35,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 // Start server
 
@@ -51,4 +53,3 @@ app.use((e, req, res, next) => {
 app.get("/api/test", (req, res) => {
   res.send("Test route working");
 });
-  
